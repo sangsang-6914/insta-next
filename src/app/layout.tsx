@@ -4,6 +4,8 @@ import Header from '@/components/Header';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextAuthProvider } from '@/context/NextAuthProvider';
+import { SWRConfig } from 'swr';
+import SWRConfigContext from '@/context/SWRConfigContext';
 
 const sans = Open_Sans({ subsets: ['latin'] });
 
@@ -19,10 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={sans.className}>
+      <body
+        className={`${sans.className} max-w-screen-2xl flex flex-col m-auto`}
+      >
         <NextAuthProvider>
-          <Header />
-          <main>{children}</main>
+          <header className="border-b border-gray-300">
+            <Header />
+          </header>
+          <main>
+            <SWRConfigContext>{children}</SWRConfigContext>
+          </main>
         </NextAuthProvider>
       </body>
     </html>

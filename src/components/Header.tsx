@@ -42,7 +42,7 @@ function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between p-4 border-b border-gray-300">
+    <header className="flex items-center justify-between p-4 max-w-screen-2xl w-full m-auto ">
       <Link href="/" className="text-3xl font-bold">
         Instantgram
       </Link>
@@ -54,7 +54,7 @@ function Header() {
         ))}
         {user && (
           <Link href={`/user/${user.username}`}>
-            <Avatar image={user.image || ''} />
+            <Avatar highlight image={user.image || ''} />
           </Link>
         )}
         {user ? (

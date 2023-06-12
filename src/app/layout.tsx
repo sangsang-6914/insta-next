@@ -21,14 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${sans.className} max-w-screen-2xl flex flex-col m-auto`}
-      >
+      <body className={`${sans.className} bg-neutral-50 w-full`}>
         <NextAuthProvider>
-          <header className="border-b border-gray-300">
-            <Header />
+          <header className="bg-white border-b sticky top-0">
+            <div className="max-w-screen-2xl mx-auto">
+              <Header />
+            </div>
           </header>
-          <main>
+          <main className="w-full flex justify-center mx-auto max-w-screen-xl">
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
         </NextAuthProvider>

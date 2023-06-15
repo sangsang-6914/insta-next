@@ -10,6 +10,9 @@ import BookmarkFillIcon from './icons/BookmarkFillIcon';
 import BookmarkIcon from './icons/BookmarkIcon';
 import HeartFillIcon from './icons/HeartFillIcon';
 import HeartIcon from './icons/HeartIcon';
+import PostDetail from './PostDetail';
+import ModalPortal from './ui/ModalPortal';
+import PostModal from './ui/PostModal';
 import ToggleButton from './ui/ToggleButton';
 
 interface Props {
@@ -20,6 +23,10 @@ function PostListCard({ post }: Props) {
   const { userImage, username, image } = post;
   const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const hideModal = () => {
+    setShowModal(false);
+  };
   return (
     <section className="border border-gray-200 rounded-lg shadow-sm shadow-neutral-300">
       <div className="flex items-center gap-2 p-3 border-b border-gray-200">
@@ -33,6 +40,7 @@ function PostListCard({ post }: Props) {
           width={500}
           height={500}
           className="w-full object-cover aspect-square cursor-pointer"
+          onClick={() => setShowModal((prev) => !prev)}
         />
       </div>
       <div className="p-4 flex flex-col gap-2 border-b border-gray-300">
@@ -71,6 +79,13 @@ function PostListCard({ post }: Props) {
         />
         <button className="text-sky-500 font-bold p-2">Post</button>
       </form>
+      {showModal && (
+        <ModalPortal>
+          <PostModal onClose={() => setShowModal(false)}>
+            <PostDetail post={post} />
+          </PostModal>
+        </ModalPortal>
+      )}
     </section>
   );
 }

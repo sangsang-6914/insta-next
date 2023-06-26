@@ -12,7 +12,7 @@ function FollowingBar() {
   const { data, isLoading } = useSWR<HomeUser>('/api/me');
   const following = data?.following && [...data.following, ...data.following];
   return (
-    <section className="border border-neutral-50 shadow-sm min-h-[130px] flex items-center justify-center shadow-neutral-300 mb-4 rounded-lg p-4 w-full overflow-x-auto">
+    <section className="border border-neutral-50 shadow-sm min-h-[130px] flex items-center justify-center shadow-neutral-300 mb-4 rounded-lg p-4 w-full overflow-x-auto relative z-0">
       {isLoading ? (
         <PropagateLoader size={8} color="red" />
       ) : (

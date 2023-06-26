@@ -19,7 +19,7 @@ function PostModal({ onClose, children }: Props) {
       <button onClick={onClose} className="fixed top-0 right-0 p-5">
         <GrClose className="w-5 h-5" />
       </button>
-      {children}
+      <div className="bg-white w-4/5 h-3/5 max-w-7xl">{children}</div>
     </section>
   );
 }

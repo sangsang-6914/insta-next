@@ -13,8 +13,9 @@ function Avatar({ image, size = 'small', highlight = false }: Props) {
     <div className={getContainerStyle(size, highlight)}>
       <Image
         src={image}
-        width={100}
-        height={100}
+        width={30}
+        height={30}
+        referrerPolicy="no-referrer"
         className={`bg-white object-cover rounded-full p-[0.1rem] ${getImageSizeStyle(
           size
         )}`}

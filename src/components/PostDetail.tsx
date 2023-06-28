@@ -25,13 +25,17 @@ function PostDetail({ post }: { post: SimplePost }) {
             comments.map(
               ({ comment, username: commentUsername, image }, index) => (
                 <li key={index} className="flex items-center mb-1">
-                  <Avatar
-                    size="small"
-                    image={image}
-                    highlight={username === commentUsername}
-                  />
-                  <p className="font-bold mx-2">{commentUsername}</p>
-                  <p>{comment}</p>
+                  <div>
+                    <Avatar
+                      image={image}
+                      size="small"
+                      highlight={commentUsername === username}
+                    />
+                  </div>
+                  <div className="ml-2">
+                    <span className="font-bold mr-1">{commentUsername}</span>
+                    <span>{comment}</span>
+                  </div>
                 </li>
               )
             )}

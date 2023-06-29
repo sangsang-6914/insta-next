@@ -13,6 +13,10 @@ export interface SearchUser extends AuthUser {
   followers: number;
 }
 
+export interface ProfileUser extends SearchUser {
+  posts: number;
+}
+
 export interface HomeUser extends AuthUser {
   following: SimpleUser[];
   followers: SimpleUser[];

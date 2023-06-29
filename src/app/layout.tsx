@@ -21,10 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sans.className} bg-neutral-50 w-full`}>
+      <body className={`${sans.className} w-full overflow-auto bg-neutral-50`}>
         <NextAuthProvider>
           <header className="bg-white border-b sticky top-0 z-10">
-            <div className="max-w-screen-2xl mx-auto">
+            <div className="max-w-screen-xl mx-auto">
               <Header />
             </div>
           </header>

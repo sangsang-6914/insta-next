@@ -21,7 +21,7 @@ function UserSearch() {
   };
 
   return (
-    <section className="w-full max-w-2xl my-4 felx flex-col items-center">
+    <section className="w-full max-w-2xl my-4 flex flex-col items-center">
       <form onSubmit={onSubmit} className="w-full mb-4">
         <input
           type="text"

@@ -1,43 +1,47 @@
 'use client';
+import useDebounce from '@/hooks/useDebounce';
 import { SearchUser } from '@/model/user';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { GridLoader } from 'react-spinners';
 import useSWR from 'swr';
 import UserCard from './UserCard';
 
 function UserSearch() {
-  // 전체 사용자 리스트 가져옴
-  // text 변경 시 리스트 변경
   const [text, setText] = useState('');
+  const debouncedText = useDebounce(text, 1000);
   const {
     data: users,
     isLoading,
     error,
-  } = useSWR<SearchUser[]>(`/api/user/${text}`);
+  } = useSWR<SearchUser[]>(`/api/search/${debouncedText}`);
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
 
   return (
-    <section className="flex flex-col p-4 w-full items-center">
-      <input
-        type="text"
-        placeholder="Search username or name..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="w-4/5 p-3 text-xl border border-gray-300 outline-none"
-      />
+    <section className="w-full max-w-2xl my-4 felx flex-col items-center">
+      <form onSubmit={onSubmit} className="w-full mb-4">
+        <input
+          type="text"
+          autoFocus
+          placeholder="Search username or name..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className="w-full text-xl p-3 outline-none border border-gray-400"
+        />
+      </form>
       {isLoading && <GridLoader color="red" className="mt-5" />}
-      <ul className="flex flex-col gap-3 w-full items-center mt-5">
+      {!isLoading && !error && users?.length === 0 && (
+        <p className="mt-5">Not Found User...</p>
+      )}
+      <ul className="w-full p-4">
         {users &&
           users.map((user) => (
-            <Link
-              key={user.id}
-              href={`/user/${user.username}`}
-              className="w-3/5"
-            >
-              <li>
-                <UserCard user={user} />
-              </li>
-            </Link>
+            <li key={user.id}>
+              <UserCard user={user} />
+            </li>
           ))}
       </ul>
     </section>

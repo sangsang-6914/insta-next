@@ -8,6 +8,11 @@ export interface AuthUser {
 
 export type SimpleUser = Pick<AuthUser, 'username' | 'image'>;
 
+export interface SearchUser extends AuthUser {
+  following: number;
+  followers: number;
+}
+
 export interface HomeUser extends AuthUser {
   following: SimpleUser[];
   followers: SimpleUser[];

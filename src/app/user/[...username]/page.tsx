@@ -8,6 +8,7 @@ interface Props {
   params: {
     username: string;
   };
+  
 }
 
 async function UserPage({ params: { username } }: Props) {
@@ -20,7 +21,7 @@ async function UserPage({ params: { username } }: Props) {
   return (
     <section className="w-full">
       <UserProfile user={user} />
-      <UserPostList />
+      <UserPostList user={user} />
     </section>
   );
 }

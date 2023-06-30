@@ -19,16 +19,10 @@ export async function getFollowingPost(username: string) {
   || author._ref in *[_type=='user' && username == "${username}"].following[]._ref]
     ${simpleGetData}
   `;
-  return client.fetch(query).then((posts) =>
-    posts.map((post: SimplePost) => ({
-      ...post,
-      image: urlFor(post.photo),
-    }))
-  );
+  return client.fetch(query).then(mapPosts);
 }
 
 export async function getPost(id: string) {
-  console.log('getPost Param : ', id);
   const query = `
     *[_type=='post' && _id == "${id}"][0]{
       ...,
@@ -45,4 +39,38 @@ export async function getPost(id: string) {
   return client
     .fetch(query)
     .then((post) => ({ ...post, image: urlFor(post.photo) }));
+}
+
+export async function getPostsOf(username: string) {
+  return client
+    .fetch(
+      `
+    *[_type=='post' && author->username == '${username}'] | order(_createdAt desc)
+      ${simpleGetData}
+    
+  `
+    )
+    .then(mapPosts);
+}
+
+export async function getLikedPostsOf(username: string) {
+  const qr = `
+    *[_type=='post' && "${username}" in likes[]->username] | order(_createdAt desc)[]
+    ${simpleGetData}
+  `;
+
+  return client.fetch(qr).then(mapPosts);
+}
+
+export async function getSavedPostsOf(username: string) {
+  const qr = `
+  *[_type=='post' && _id in *[_type=='user' && username=="${username}"].bookmarks[]._ref] | order(_createdAt desc)[]${simpleGetData}`;
+  return client.fetch(qr).then(mapPosts);
+}
+
+function mapPosts(posts: SimplePost[]) {
+  return posts.map((post) => ({
+    ...post,
+    image: urlFor(post.photo),
+  }));
 }

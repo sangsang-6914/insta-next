@@ -1,13 +1,14 @@
 import { SimplePost } from '@/model/post';
 import { convertTimeago } from '@/util/time';
-import React, { useState } from 'react';
+import React from 'react';
 import BookmarkFillIcon from './icons/BookmarkFillIcon';
 import BookmarkIcon from './icons/BookmarkIcon';
 import HeartFillIcon from './icons/HeartFillIcon';
 import HeartIcon from './icons/HeartIcon';
 import ToggleButton from './ui/ToggleButton';
-import { useSession } from 'next-auth/react';
 import usePosts from '@/hooks/usePosts';
+
+import useUsers from '@/hooks/useUsers';
 
 interface Props {
   post: SimplePost;
@@ -15,19 +16,23 @@ interface Props {
 
 function ActionBar({ post }: Props) {
   const { id, likes, username, text, createdAt } = post;
-  const { data: session } = useSession();
   const { setLike } = usePosts();
-  const user = session?.user;
-  const like = likes.includes(user.username);
-  const [bookmarked, setBookmarked] = useState(false);
+  const { user, setBookmark } = useUsers();
+
+  const liked = user ? likes.includes(user.username) : false;
+  const bookmarked = user?.bookmarks.includes(id) ?? false;
+
   const handleLikedClick = (like: boolean) => {
-    setLike(post, user.username, like);
+    user && setLike(post, user.username, like);
+  };
+  const handleBookmarkedClick = (bookmark: boolean) => {
+    setBookmark(post, bookmark);
   };
   return (
     <div className="p-4 flex flex-col gap-2 border-b border-gray-300">
       <div className="flex justify-between">
         <ToggleButton
-          toggled={like}
+          toggled={liked}
           icon={<HeartIcon />}
           fillIcon={<HeartFillIcon />}
           onToggle={handleLikedClick}
@@ -36,7 +41,7 @@ function ActionBar({ post }: Props) {
           toggled={bookmarked}
           icon={<BookmarkIcon />}
           fillIcon={<BookmarkFillIcon />}
-          onToggle={() => setBookmarked((prev) => !prev)}
+          onToggle={handleBookmarkedClick}
         />
       </div>
       <p className="font-bold">

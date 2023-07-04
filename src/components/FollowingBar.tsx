@@ -2,15 +2,15 @@
 
 import { HomeUser } from '@/model/user';
 import React from 'react';
-import useSWR from 'swr';
 import ScrollableBar from './ScrollableBar';
 import Avatar from './Avatar';
 import Link from 'next/link';
 import { PropagateLoader } from 'react-spinners';
+import useUsers from '@/hooks/useUsers';
 
 function FollowingBar() {
-  const { data, isLoading } = useSWR<HomeUser>('/api/me');
-  const following = data?.following && [...data.following, ...data.following];
+  const { user, isLoading } = useUsers();
+  const following = user?.following && [...user.following, ...user.following];
   return (
     <section className="border border-neutral-50 shadow-sm min-h-[130px] flex items-center justify-center shadow-neutral-300 mb-4 rounded-lg p-4 w-full overflow-x-auto relative z-0">
       {isLoading ? (

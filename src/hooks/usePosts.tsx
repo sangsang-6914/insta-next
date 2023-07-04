@@ -20,7 +20,7 @@ function usePosts() {
     isLoading,
     error,
     mutate,
-  } = useSWR<SimplePost[]>('/api/post');
+  } = useSWR<SimplePost[]>('/api/posts');
 
   const setLike = (post: SimplePost, username: string, like: boolean) => {
     const newPost = {

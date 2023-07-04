@@ -38,12 +38,7 @@ function PostListCard({ post }: Props) {
           onClick={() => setShowModal((prev) => !prev)}
         />
       </div>
-      <ActionBar
-        likes={likes}
-        createdAt={createdAt}
-        text={text}
-        username={username}
-      />
+      <ActionBar post={post} />
       <CommentForm />
       {showModal && (
         <ModalPortal>

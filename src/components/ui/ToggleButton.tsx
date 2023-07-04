@@ -4,11 +4,15 @@ interface Props {
   toggled: boolean;
   icon: React.ReactNode;
   fillIcon: React.ReactNode;
-  onToggle: () => void;
+  onToggle: (toggled: boolean) => void;
 }
 
 function ToggleButton({ toggled, icon, fillIcon, onToggle }: Props) {
-  return <button onClick={onToggle}>{toggled ? fillIcon : icon}</button>;
+  return (
+    <button onClick={() => onToggle(!toggled)}>
+      {toggled ? fillIcon : icon}
+    </button>
+  );
 }
 
 export default ToggleButton;

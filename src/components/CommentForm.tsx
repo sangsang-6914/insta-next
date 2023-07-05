@@ -1,9 +1,23 @@
-import React from 'react';
+import usePosts from '@/hooks/usePosts';
+import { SimplePost } from '@/model/post';
+import React, { FormEvent, useState } from 'react';
 import { BsEmojiSmile } from 'react-icons/bs';
 
-function CommentForm() {
+interface Props {
+  post: SimplePost;
+}
+
+function CommentForm({ post }: Props) {
+  const [comment, setComment] = useState('');
+  const {addComment} = usePosts();
+  const buttonDisabled = comment.length < 1;
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    addComment(post, comment);
+    setComment('')
+  };
   return (
-    <form className="flex justify-between">
+    <form onSubmit={handleSubmit} className="flex justify-between">
       <div className="p-3">
         <BsEmojiSmile className="w-6 h-6" />
       </div>
@@ -11,8 +25,15 @@ function CommentForm() {
         type="text"
         placeholder="Add a comment..."
         className="outline-none flex-1 p-2"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
       />
-      <button className="text-sky-500 font-bold p-2">Post</button>
+      <button
+        disabled={buttonDisabled}
+        className="text-sky-500 font-bold p-2 disabled:text-sky-200"
+      >
+        Post
+      </button>
     </form>
   );
 }

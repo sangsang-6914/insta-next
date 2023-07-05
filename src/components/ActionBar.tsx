@@ -12,9 +12,10 @@ import useUsers from '@/hooks/useUsers';
 
 interface Props {
   post: SimplePost;
+  children?: React.ReactNode;
 }
 
-function ActionBar({ post }: Props) {
+function ActionBar({ post, children }: Props) {
   const { id, likes, username, text, createdAt } = post;
   const { setLike } = usePosts();
   const { user, setBookmark } = useUsers();
@@ -48,12 +49,7 @@ function ActionBar({ post }: Props) {
         {likes ? likes.length : 0}{' '}
         {likes && likes.length > 1 ? 'likes' : 'like'}
       </p>
-      {text && (
-        <div className="flex gap-1 items-center">
-          <p className="font-bold">{username}</p>
-          <p>{text}</p>
-        </div>
-      )}
+      {children}
       <p className="text-neutral-500">{convertTimeago(createdAt)}</p>
     </div>
   );

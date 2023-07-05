@@ -41,7 +41,7 @@ function PostDetail({ post }: { post: SimplePost }) {
             )}
         </ul>
         <ActionBar post={post} />
-        <CommentForm />
+        <CommentForm post={post} />
       </div>
     </section>
   );

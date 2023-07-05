@@ -23,7 +23,7 @@ interface Props {
 }
 
 function PostListCard({ post }: Props) {
-  const { userImage, username, image, likes, createdAt, text } = post;
+  const { userImage, username, image, text, comments, id } = post;
   const [showModal, setShowModal] = useState(false);
   return (
     <section className="border border-gray-200 rounded-lg shadow-sm shadow-neutral-300">
@@ -38,8 +38,19 @@ function PostListCard({ post }: Props) {
           onClick={() => setShowModal((prev) => !prev)}
         />
       </div>
-      <ActionBar post={post} />
-      <CommentForm />
+      <ActionBar post={post}>
+        <div className="flex gap-1 items-center">
+          <p className="font-bold">{username}</p>
+          <p>{text}</p>
+        </div>
+        <div>
+          <p
+            onClick={() => setShowModal(true)}
+            className="text-sky-500 font-bold my-2 cursor-pointer"
+          >{`View all ${comments} comments`}</p>
+        </div>
+      </ActionBar>
+      <CommentForm post={post} />
       {showModal && (
         <ModalPortal>
           <PostModal onClose={() => setShowModal(false)}>

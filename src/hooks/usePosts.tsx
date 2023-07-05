@@ -14,6 +14,16 @@ function updateLike(id: string, like: boolean) {
   }).then((res) => res.json());
 }
 
+function commentAdd(id: string, comment: string) {
+  return fetch('/api/comments', {
+    method: 'POST',
+    body: JSON.stringify({
+      id,
+      comment,
+    }),
+  }).then((res) => res.json());
+}
+
 function usePosts() {
   const {
     data: posts,
@@ -38,7 +48,22 @@ function usePosts() {
     });
   };
 
-  return { posts, isLoading, error, setLike };
+  const addComment = (post: SimplePost, comment: string) => {
+    const newPost = {
+      ...post,
+      comments: post.comments + 1,
+    };
+
+    const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
+    mutate(commentAdd(post.id, comment), {
+      optimisticData: newPosts,
+      populateCache: false,
+      revalidate: false,
+      rollbackOnError: true,
+    });
+  };
+
+  return { posts, isLoading, error, setLike, addComment };
 }
 
 export default usePosts;

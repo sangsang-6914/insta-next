@@ -1,4 +1,4 @@
-import { SimplePost } from '@/model/post';
+import { Comment, SimplePost } from '@/model/post';
 import { convertTimeago } from '@/util/time';
 import React from 'react';
 import BookmarkFillIcon from './icons/BookmarkFillIcon';
@@ -9,13 +9,15 @@ import ToggleButton from './ui/ToggleButton';
 import usePosts from '@/hooks/usePosts';
 
 import useUsers from '@/hooks/useUsers';
+import CommentForm from './CommentForm';
 
 interface Props {
   post: SimplePost;
   children?: React.ReactNode;
+  onAddComment: (comment: Comment) => void;
 }
 
-function ActionBar({ post, children }: Props) {
+function ActionBar({ post, children, onAddComment }: Props) {
   const { id, likes, username, text, createdAt } = post;
   const { setLike } = usePosts();
   const { user, setBookmark } = useUsers();
@@ -29,6 +31,12 @@ function ActionBar({ post, children }: Props) {
   const handleBookmarkedClick = (bookmark: boolean) => {
     setBookmark(post, bookmark);
   };
+
+  const handleComment = (comment: string) => {
+    user &&
+      onAddComment({ comment, username: user.username, image: user.image });
+  };
+
   return (
     <div className="p-4 flex flex-col gap-2 border-b border-gray-300">
       <div className="flex justify-between">
@@ -51,6 +59,7 @@ function ActionBar({ post, children }: Props) {
       </p>
       {children}
       <p className="text-neutral-500">{convertTimeago(createdAt)}</p>
+      <CommentForm onCommentForm={handleComment} />
     </div>
   );
 }

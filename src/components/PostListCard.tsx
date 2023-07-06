@@ -1,7 +1,7 @@
 'use client';
 
 import usePosts from '@/hooks/usePosts';
-import { SimplePost } from '@/model/post';
+import { Comment, SimplePost } from '@/model/post';
 import { convertTimeago } from '@/util/time';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -27,8 +27,8 @@ function PostListCard({ post }: Props) {
   const { userImage, username, image, text, comments, id } = post;
   const [showModal, setShowModal] = useState(false);
   const { addComment } = usePosts();
-  const handleComment = (comment: string) => {
-    addComment(post, comment);
+  const handleComment = (comment: Comment) => {
+    addComment(post, comment.comment);
   };
   return (
     <section className="border border-gray-200 rounded-lg shadow-sm shadow-neutral-300">
@@ -43,7 +43,7 @@ function PostListCard({ post }: Props) {
           onClick={() => setShowModal((prev) => !prev)}
         />
       </div>
-      <ActionBar post={post}>
+      <ActionBar post={post} onAddComment={handleComment}>
         <div className="flex gap-1 items-center">
           <p className="font-bold">{username}</p>
           <p>{text}</p>
@@ -55,7 +55,7 @@ function PostListCard({ post }: Props) {
           >{`View all ${comments} comments`}</p>
         </div>
       </ActionBar>
-      <CommentForm onCommentForm={handleComment} />
+
       {showModal && (
         <ModalPortal>
           <PostModal onClose={() => setShowModal(false)}>

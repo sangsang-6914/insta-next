@@ -1,6 +1,6 @@
 import { SimplePost } from '@/model/post';
 import { HomeUser } from '@/model/user';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import useSWR from 'swr';
 
@@ -20,21 +20,24 @@ function updateBookmark(postId: string, bookmark: boolean) {
 function useUsers() {
   const { data: user, isLoading, error, mutate } = useSWR<HomeUser>('/api/me');
 
-  const setBookmark = (post: SimplePost, bookmark: boolean) => {
-    const newUser = user && {
-      ...user,
-      bookmarks: bookmark
-        ? [...user.bookmarks, post.id]
-        : user.bookmarks.filter((item) => item !== post.id),
-    };
+  const setBookmark = useCallback(
+    (post: SimplePost, bookmark: boolean) => {
+      const newUser = user && {
+        ...user,
+        bookmarks: bookmark
+          ? [...user.bookmarks, post.id]
+          : user.bookmarks.filter((item) => item !== post.id),
+      };
 
-    return mutate(updateBookmark(post.id, bookmark), {
-      optimisticData: newUser,
-      rollbackOnError: true,
-      revalidate: false,
-      populateCache: false,
-    });
-  };
+      return mutate(updateBookmark(post.id, bookmark), {
+        optimisticData: newUser,
+        rollbackOnError: true,
+        revalidate: false,
+        populateCache: false,
+      });
+    },
+    [user, mutate]
+  );
 
   return { user, isLoading, error, setBookmark };
 }

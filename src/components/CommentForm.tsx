@@ -4,17 +4,16 @@ import React, { FormEvent, useState } from 'react';
 import { BsEmojiSmile } from 'react-icons/bs';
 
 interface Props {
-  post: SimplePost;
+  onCommentForm: (comment: string) => void;
 }
 
-function CommentForm({ post }: Props) {
+function CommentForm({ onCommentForm }: Props) {
   const [comment, setComment] = useState('');
-  const {addComment} = usePosts();
   const buttonDisabled = comment.length < 1;
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addComment(post, comment);
-    setComment('')
+    onCommentForm(comment);
+    setComment('');
   };
   return (
     <form onSubmit={handleSubmit} className="flex justify-between">

@@ -1,5 +1,6 @@
 'use client';
 
+import usePosts from '@/hooks/usePosts';
 import { SimplePost } from '@/model/post';
 import { convertTimeago } from '@/util/time';
 import Image from 'next/image';
@@ -25,6 +26,10 @@ interface Props {
 function PostListCard({ post }: Props) {
   const { userImage, username, image, text, comments, id } = post;
   const [showModal, setShowModal] = useState(false);
+  const { addComment } = usePosts();
+  const handleComment = (comment: string) => {
+    addComment(post, comment);
+  };
   return (
     <section className="border border-gray-200 rounded-lg shadow-sm shadow-neutral-300">
       <PostUserAvatar userImage={userImage} username={username} />
@@ -50,7 +55,7 @@ function PostListCard({ post }: Props) {
           >{`View all ${comments} comments`}</p>
         </div>
       </ActionBar>
-      <CommentForm post={post} />
+      <CommentForm onCommentForm={handleComment} />
       {showModal && (
         <ModalPortal>
           <PostModal onClose={() => setShowModal(false)}>

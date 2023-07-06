@@ -1,17 +1,21 @@
-import { FullPost, SimplePost } from '@/model/post';
+import { SimplePost } from '@/model/post';
 import Image from 'next/image';
 import React from 'react';
 import Avatar from './Avatar';
-import useSWR from 'swr';
 import PostUserAvatar from './PostUserAvatar';
 import ActionBar from './ActionBar';
 import CommentForm from './CommentForm';
+import useFullPost from '@/hooks/usePost';
+import useUsers from '@/hooks/useUsers';
 
 function PostDetail({ post }: { post: SimplePost }) {
   const { photo, userImage, image, id, username, likes, createdAt } = post;
-  const { data } = useSWR<FullPost>(`/api/post/${id}`);
+  const { user } = useUsers();
+  const { post: data, addComment } = useFullPost(id);
   const comments = data?.comments;
-  console.log(comments);
+  const handleComment = (comment: string) => {
+    user && addComment({ comment, username: user.username, image: user.image });
+  };
 
   return (
     <section className="flex w-full h-full z-50">
@@ -27,7 +31,7 @@ function PostDetail({ post }: { post: SimplePost }) {
                 <li key={index} className="flex items-center mb-1">
                   <div>
                     <Avatar
-                      image={image}
+                      image={image || ''}
                       size="small"
                       highlight={commentUsername === username}
                     />
@@ -41,7 +45,7 @@ function PostDetail({ post }: { post: SimplePost }) {
             )}
         </ul>
         <ActionBar post={post} />
-        <CommentForm post={post} />
+        <CommentForm onCommentForm={handleComment} />
       </div>
     </section>
   );

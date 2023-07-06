@@ -17,6 +17,16 @@ function updateBookmark(postId: string, bookmark: boolean) {
   }).then((res) => res.json());
 }
 
+function updateFollow(targetId: string, follow: boolean) {
+  return fetch('/api/follow', {
+    method: 'PUT',
+    body: JSON.stringify({
+      targetId,
+      follow,
+    }),
+  }).then((res) => res.json());
+}
+
 function useUsers() {
   const { data: user, isLoading, error, mutate } = useSWR<HomeUser>('/api/me');
 
@@ -39,7 +49,16 @@ function useUsers() {
     [user, mutate]
   );
 
-  return { user, isLoading, error, setBookmark };
+  const toggleFollow = useCallback(
+    (targetId: string, follow: boolean) => {
+      return mutate(updateFollow(targetId, follow), {
+        populateCache: true,
+      });
+    },
+    [mutate]
+  );
+
+  return { user, isLoading, error, setBookmark, toggleFollow };
 }
 
 export default useUsers;

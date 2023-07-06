@@ -19,6 +19,7 @@ function UserProfile({ user }: Props) {
     { data: followers, title: 'followers' },
     { data: following, title: 'following' },
   ];
+
   return (
     <section className="w-full flex flex-col md:flex-row items-center justify-center py-12 border-b border-neutral-300">
       <Avatar image={image || ''} highlight size="xlarge" />

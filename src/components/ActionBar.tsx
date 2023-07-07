@@ -18,7 +18,7 @@ interface Props {
 }
 
 function ActionBar({ post, children, onAddComment }: Props) {
-  const { id, likes, username, text, createdAt } = post;
+  const { id, likes, createdAt } = post;
   const { setLike } = usePosts();
   const { user, setBookmark } = useUsers();
 

@@ -1,20 +1,15 @@
+import { useCacheKey } from '@/context/CacheKeyProvider';
+import usePosts from '@/hooks/usePosts';
 import { SimplePost } from '@/model/post';
 import React from 'react';
 import { GridLoader } from 'react-spinners';
 import useSWR from 'swr';
 import PostGridCard from './PostGridCard';
-interface Props {
-  username: string;
-  query: string;
-}
 
-function PostGrid({ username, query }: Props) {
-  const {
-    data: posts,
-    isLoading,
-    error,
-  } = useSWR<SimplePost[]>(`/api/users/${query}/${username}`);
-  console.log(posts);
+function PostGrid() {
+  const cacheKey = useCacheKey();
+  const { posts, isLoading, error } = usePosts(cacheKey);
+
   return (
     <section className="w-full text-center">
       {isLoading && <GridLoader color="red" />}

@@ -1,5 +1,6 @@
 'use client';
 
+import { CacheKeyContext } from '@/context/CacheKeyProvider';
 import { ProfileUser } from '@/model/user';
 import React, { useState } from 'react';
 import BookmarkIcon from './icons/BookmarkIcon';
@@ -36,7 +37,11 @@ function UserPostList({ user }: Props) {
           </li>
         ))}
       </ul>
-      <PostGrid query={query} username={username} />
+      <CacheKeyContext.Provider
+        value={{ postsKey: `/api/users/${query}/${username}` }}
+      >
+        <PostGrid />
+      </CacheKeyContext.Provider>
     </section>
   );
 }

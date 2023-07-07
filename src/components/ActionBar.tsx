@@ -10,6 +10,7 @@ import usePosts from '@/hooks/usePosts';
 
 import useUsers from '@/hooks/useUsers';
 import CommentForm from './CommentForm';
+import { useCacheKey } from '@/context/CacheKeyProvider';
 
 interface Props {
   post: SimplePost;
@@ -38,29 +39,31 @@ function ActionBar({ post, children, onAddComment }: Props) {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-2 border-b border-gray-300">
-      <div className="flex justify-between">
-        <ToggleButton
-          toggled={liked}
-          icon={<HeartIcon />}
-          fillIcon={<HeartFillIcon />}
-          onToggle={handleLikedClick}
-        />{' '}
-        <ToggleButton
-          toggled={bookmarked}
-          icon={<BookmarkIcon />}
-          fillIcon={<BookmarkFillIcon />}
-          onToggle={handleBookmarkedClick}
-        />
+    <>
+      <div className="p-4 flex flex-col gap-2 border-b border-gray-300">
+        <div className="flex justify-between">
+          <ToggleButton
+            toggled={liked}
+            icon={<HeartIcon />}
+            fillIcon={<HeartFillIcon />}
+            onToggle={handleLikedClick}
+          />{' '}
+          <ToggleButton
+            toggled={bookmarked}
+            icon={<BookmarkIcon />}
+            fillIcon={<BookmarkFillIcon />}
+            onToggle={handleBookmarkedClick}
+          />
+        </div>
+        <p className="font-bold">
+          {likes ? likes.length : 0}{' '}
+          {likes && likes.length > 1 ? 'likes' : 'like'}
+        </p>
+        {children}
+        <p className="text-neutral-500">{convertTimeago(createdAt)}</p>
       </div>
-      <p className="font-bold">
-        {likes ? likes.length : 0}{' '}
-        {likes && likes.length > 1 ? 'likes' : 'like'}
-      </p>
-      {children}
-      <p className="text-neutral-500">{convertTimeago(createdAt)}</p>
       <CommentForm onCommentForm={handleComment} />
-    </div>
+    </>
   );
 }
 

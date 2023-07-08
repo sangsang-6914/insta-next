@@ -7,8 +7,7 @@ import useSWR from 'swr';
 import PostGridCard from './PostGridCard';
 
 function PostGrid() {
-  const cacheKey = useCacheKey();
-  const { posts, isLoading, error } = usePosts(cacheKey);
+  const { posts, isLoading, error } = usePosts();
 
   return (
     <section className="w-full text-center">

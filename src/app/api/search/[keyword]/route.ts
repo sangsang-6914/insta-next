@@ -8,7 +8,6 @@ interface Context {
 }
 
 export async function GET(_: NextRequest, context: Context) {
-  console.log(context.params.keyword);
   const keyword = context.params.keyword;
 
   return getSearchUser(keyword)

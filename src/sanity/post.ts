@@ -1,6 +1,6 @@
 import { SimplePost } from '@/model/post';
 import post from '../../sanity-studio/schemas/post';
-import { client, urlFor } from './sanity';
+import { client, urlFor, imageUploadUrl } from './sanity';
 
 const simpleGetData = `{
   ...,
@@ -16,7 +16,7 @@ const simpleGetData = `{
 export async function getFollowingPost(username: string) {
   const query = `
   *[_type=='post' && author->username == "${username}"
-  || author._ref in *[_type=='user' && username == "${username}"].following[]._ref]
+  || author._ref in *[_type=='user' && username == "${username}"].following[]._ref] | order(_createdAt desc)
     ${simpleGetData}
   `;
   return client.fetch(query).then(mapPosts);
@@ -106,6 +106,37 @@ export async function addComment(
       },
     ])
     .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function createPost(userId: string, text: string, file: Blob) {
+  return fetch(imageUploadUrl, {
+    method: 'POST',
+    headers: {
+      'Content-type': file.type,
+      authorization: `Bearer ${process.env.SANITY_SECRET_TOKEN}`,
+    },
+    body: file,
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      return client.create(
+        {
+          _type: 'post',
+          author: {
+            _ref: userId,
+          },
+          photo: { asset: { _ref: result.document._id } },
+          comments: [
+            {
+              comment: text,
+              author: { _ref: userId, _type: 'reference' },
+            },
+          ],
+          likes: [],
+        },
+        { autoGenerateArrayKeys: true }
+      );
+    });
 }
 
 function mapPosts(posts: SimplePost[]) {

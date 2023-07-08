@@ -18,7 +18,7 @@ function PostDetail({ post }: { post: SimplePost }) {
       </div>
       <div className="basis-2/5 flex flex-col">
         <PostUserAvatar userImage={userImage} username={username} />
-        <ul className="p-4 h-full overflow-y-auto mb-1">
+        <ul className="border-t border-gray-200 p-4 h-full overflow-y-auto mb-1">
           {comments &&
             comments.map(
               ({ comment, username: commentUsername, image }, index) => (

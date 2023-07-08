@@ -10,7 +10,7 @@ import useUsers from '@/hooks/useUsers';
 
 function FollowingBar() {
   const { user, isLoading } = useUsers();
-  const following = user?.following && [...user.following, ...user.following];
+  const following = user?.following;
   return (
     <section className="border border-neutral-50 shadow-sm min-h-[130px] flex items-center justify-center shadow-neutral-300 mb-4 rounded-lg p-4 w-full overflow-x-auto relative z-0">
       {isLoading ? (

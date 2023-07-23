@@ -1,12 +1,12 @@
 'use client';
 
 import useUsers from '@/hooks/useUsers';
-import { HomeUser, ProfileUser } from '@/model/user';
+import { ProfileUser } from '@/model/user';
 import { useRouter } from 'next/navigation';
 
 import React, { useState, useTransition } from 'react';
 import { PulseLoader } from 'react-spinners';
-import useSWR from 'swr';
+
 import Button from './ui/Button';
 
 interface Props {
@@ -32,6 +32,7 @@ function FollowButton({ user }: Props) {
       router.refresh();
     });
   };
+
   return (
     <>
       <div className="relative">

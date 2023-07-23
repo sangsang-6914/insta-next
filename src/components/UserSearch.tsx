@@ -1,7 +1,6 @@
 'use client';
 import useDebounce from '@/hooks/useDebounce';
 import { SearchUser } from '@/model/user';
-import Link from 'next/link';
 import React, { FormEvent, useState } from 'react';
 import { GridLoader } from 'react-spinners';
 import useSWR from 'swr';
@@ -19,9 +18,6 @@ function UserSearch() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
   };
-
-  // nar, timo, debouncedValue Timing is now...
-  // vscode return
 
   return (
     <section className="w-full max-w-2xl my-4 flex flex-col items-center">

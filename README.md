@@ -12,6 +12,12 @@
 | :--------: | :--------: | :------: | :-----: | :---------: | :---------: | :----: |
 |   ![js]    |   ![ts]    | ![react] | ![next] | ![tailwind] |  ![sanity]  | ![swr] |
 
+## Test
+
+|  Jest   |  Testing-library   |
+| :-----: | :----------------: |
+| ![jest] | ![testing-library] |
+
 ## 기능설명
 
 1. 로그인 & 로그아웃 (Next-auth)
@@ -62,3 +68,5 @@
 [sanity]: /images/stack/sanity.svg
 [tailwind]: /images/stack/tailwindcss.svg
 [swr]: /images/stack/swr.svg
+[jest]: /images/stack//jest.svg
+[testing-library]: /images/stack/testing-library.svg

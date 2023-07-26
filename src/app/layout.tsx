@@ -1,10 +1,7 @@
 import './globals.css';
 import { Open_Sans } from 'next/font/google';
 import Header from '@/components/Header';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { NextAuthProvider } from '@/context/NextAuthProvider';
-import { SWRConfig } from 'swr';
 import SWRConfigContext from '@/context/SWRConfigContext';
 import { Metadata } from 'next';
 

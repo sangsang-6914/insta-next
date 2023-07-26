@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component Test Sidebar render test 1`] = `
+<div>
+  <section
+    class="flex flex-col gap-4"
+  >
+    <div
+      class="flex items-center"
+    >
+      <div
+        class="rounded-full flex justify-center items-center  w-11 h-11"
+      >
+        <img
+          alt="user profile"
+          class="bg-white object-cover rounded-full p-[0.1rem] w-[42px] h-[42px] p-[0.1rem]"
+          data-nimg="1"
+          decoding="async"
+          height="30"
+          referrerpolicy="no-referrer"
+          src=""
+          style="color: transparent;"
+          width="30"
+        />
+      </div>
+      <div
+        class="flex flex-col ml-5"
+      >
+        <p
+          class="font-bold"
+        >
+          test
+        </p>
+        <p>
+          test
+        </p>
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-neutral-500"
+      >
+        About ∙ Help ∙ Press ∙ API ∙ Jobs ∙ 
+        <br />
+        Privacy ∙ Terms ∙ Location ∙ 
+        <br />
+        Language
+      </p>
+    </div>
+    <div>
+      <p
+        class="text-neutral-500 font-bold"
+      >
+        @Copyright INSTANTGRAM 
+        <br />
+         from METAL
+      </p>
+    </div>
+  </section>
+</div>
+`;

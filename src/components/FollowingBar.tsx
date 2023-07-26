@@ -1,6 +1,5 @@
 'use client';
 
-import { HomeUser } from '@/model/user';
 import React from 'react';
 import ScrollableBar from './ScrollableBar';
 import Avatar from './Avatar';

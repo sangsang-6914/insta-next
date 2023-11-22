@@ -1,10 +1,8 @@
-## Project Name
+### Project Start
 
-<span style='background-color: #fff5b1; font-weight: bold; font-size: 20px'>Instantgram</span>
-
-## Project URL by Vercel
-
-##### https://instantgram-sangsang6914.vercel.app
+1. node 버전 설정 (v18.16.0)
+2. npm install
+3. npm run start
 
 ## Tech Stack
 
@@ -32,6 +30,10 @@
 10. 페이지 별 사용자 검증 기능
 
 - 점진적 추가(유지보수) 예정
+
+## Deploy 주소
+
+https://instantgram-sangsang6914.vercel.app
 
 ## Pages
 
